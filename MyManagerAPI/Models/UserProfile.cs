@@ -24,6 +24,7 @@ namespace MyManagerAPI.Models
         [DataType(DataType.Url)]
         public string ProfileImageUrl { get; set; }
         public int UserTypeId { get; set; }
+        public UserType UserType { get; set; }
 
         public string FullName
         {
