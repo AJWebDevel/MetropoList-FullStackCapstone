@@ -28,7 +28,15 @@ export const currentUser = () => {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(resp => resp.ok));
+        }).then((resp) => {
+            if (resp.ok) {
+                return resp.json();
+            } else {
+                throw new Error(
+                    "An error has occured while trying to fetch this user."
+                );
+            }
+        }));
 };
 
 export const getUserById = (id) => {

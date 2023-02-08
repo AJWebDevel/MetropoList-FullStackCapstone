@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
     Collapse,
@@ -10,6 +10,7 @@ import {
     NavLink
 } from 'reactstrap';
 import { logout } from '../modules/authManager';
+import { currentUser } from '../modules/userManager';
 import AdminHome from './home/adminHome';
 
 //import { UserList } from './UserList';
@@ -17,7 +18,14 @@ import AdminHome from './home/adminHome';
 
 export default function Header({ isLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [user, setUser] = useState({});
     const toggle = () => setIsOpen(!isOpen);
+    useEffect(() => {
+        currentUser().then((u) => {
+            setUser(u)
+        })
+    }, []);
+
 
     return (
         <div>
@@ -26,12 +34,21 @@ export default function Header({ isLoggedIn }) {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
+
                         { /* When isLoggedIn === true, we will render the Home link */}
                         {isLoggedIn &&
                             <>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/adminHome">Home</NavLink>
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to={`/Details/${user.id}`}>Profile</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to={`/ListByUser`}>My Lists</NavLink>
+                                </NavItem>
+
+
 
                             </>
                         }
