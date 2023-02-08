@@ -29,6 +29,9 @@ namespace MyManagerAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<IListRepository, ListRepository>();
+            services.AddTransient<ITagRepository, TagRepository>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -167,5 +167,30 @@ namespace MyManagerAPI.Repositories
             }
         }
         //update user
+        public void Update(UserProfile userProfile)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE UserProfile
+                           SET FirstName = @Title,
+                               LastName = @Description,
+                               Email = @DateCreated,
+                               ProfileImageUrl = @Url,
+                         WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Firstname", userProfile.FirstName);
+                    DbUtils.AddParameter(cmd, "@LastName", userProfile.LastName);
+                    DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
+                    DbUtils.AddParameter(cmd, "@ProfileImageUrl", userProfile.ProfileImageUrl);
+                    DbUtils.AddParameter(cmd, "@Id", userProfile.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

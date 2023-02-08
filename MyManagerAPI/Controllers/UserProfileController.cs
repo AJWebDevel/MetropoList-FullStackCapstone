@@ -67,16 +67,16 @@ namespace MyManagerAPI.Controllers
         // POST: UserProfileController/Edit/5
         [HttpPut("${id}")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, UserProfile userProfile)
         {
-            try
+            if (id != userProfile.Id)
             {
-                return RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            catch
-            {
-                return Ok();
-            }
+
+          _userProfileRepository.Update(userProfile);
+                return NoContent();
+            
         }
         [HttpGet("{CurrentUser}")]
         public UserProfile GetCurrentUserProfile()

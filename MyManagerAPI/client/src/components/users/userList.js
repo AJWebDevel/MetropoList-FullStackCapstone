@@ -17,7 +17,7 @@ export const UserList = () => {
             users.map((u) => (
                 <div>
                     <User key={u.id} user={u} />
-                    {/* <Link to={`/Details/${u.id}`}>Details</Link> */}
+                    <Link to={`/Details/${u.id}`}>Details</Link>
 
                 </div>
             ))

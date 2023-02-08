@@ -5,8 +5,11 @@ import { currentUser } from "../modules/userManager";
 import Login from "./auth/login";
 import Register from "./auth/register";
 import AdminHome from "./home/adminHome";
+import { AllLists } from "./Lists/allLists";
+import { ListByUser } from "./Lists/listByUser";
+import { Profile } from "./profile/details";
+import { Alltags } from "./tags/alltags";
 import { UserList } from "./users/userList";
-
 
 
 
@@ -34,14 +37,27 @@ export default function ApplicationViews({ isLoggedIn }) {
                         path="UserList"
                         element={isLoggedIn ? <UserList /> : <Navigate to="/UserList" />}
                     />
-                    {/* <Route
+                    <Route
                         path="Details/:id"
-                        element={isLoggedIn ? <UserDetails /> : <Navigate to="/Details/:id" />}
-                    /> */}
+                        element={isLoggedIn ? <Profile /> : <Navigate to="/Details/:id" />}
+                    />
                     <Route
                         path="adminHome"
                         element={isLoggedIn ? <AdminHome /> : <Navigate to="/adminHome" />}
                     />
+                    <Route
+                        path="allLists"
+                        element={isLoggedIn ? <AllLists /> : <Navigate to="/allLists" />}
+                    />
+                    <Route
+                        path="listByUser"
+                        element={isLoggedIn ? <ListByUser /> : <Navigate to="/listByUser" />}
+                    />
+                    <Route
+                        path="allTags"
+                        element={isLoggedIn ? <Alltags /> : <Navigate to="/allTags" />}
+                    />
+
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
 

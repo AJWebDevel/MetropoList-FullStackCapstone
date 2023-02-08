@@ -9,5 +9,6 @@ namespace MyManagerAPI.Repositories
        UserProfile GetByFirebaseUserId(string firebaseUserId);
        UserProfile GetUserById(int id);
         void Add(UserProfile userProfile);
+        void Update(UserProfile userProfile);
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 using System;
-
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -16,5 +16,7 @@ namespace MyManagerAPI.Models
         [Required]
         [MaxLength(50)]
         public string ListName { get; set; }
+        public List<Task> Tasks { get; set; }
+        public List<ListTag> Tags { get; set; }
     }
 }
