@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyManagerAPI.Models;
 using MyManagerAPI.Repositories;
+using System.Reflection.Metadata.Ecma335;
 
 namespace MyManagerAPI.Controllers
 {
@@ -39,7 +40,7 @@ namespace MyManagerAPI.Controllers
         public ActionResult Create(Tag tag)
         {
          _tagRepository.AddTag(tag);
-                return CreatedAtAction("Get", new { id = tag.Id }, tag);
+                return NoContent();
            
         }
 

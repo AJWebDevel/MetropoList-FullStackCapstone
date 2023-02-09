@@ -194,6 +194,19 @@ namespace MyManagerAPI.Repositories
                 }
             }
         }
+
+        public void AddList(List list)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO ";
+                }
+            }
+        }
     }
 }
     

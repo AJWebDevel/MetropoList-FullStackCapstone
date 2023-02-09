@@ -19,7 +19,9 @@ export const ListByUser = () => {
             userLists.map((uL) => (
                 <div>
                     <p>{uL.listName}</p>
-
+                    <p> {uL.tasks.map((t) => {
+                        <p>{t.title}</p>
+                    })}</p>
                 </div>
             ))
         }

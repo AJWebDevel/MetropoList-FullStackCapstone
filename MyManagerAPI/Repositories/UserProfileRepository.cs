@@ -180,7 +180,7 @@ namespace MyManagerAPI.Repositories
                            SET FirstName = @FirstName,
                                LastName = @LastName,
                                Email = @Email,
-                               ProfileImageUrl = @ProfileImageUrl,
+                               ProfileImageUrl = @ProfileImageUrl
                          WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);

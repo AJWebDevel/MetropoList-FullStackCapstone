@@ -18,7 +18,7 @@ export const AllTags = () => {
             tags.map((t) => (
                 <div>
                     <p>{t.tagName}</p>
-                    <button onClick={deleteTag(t.id)}>Delete</button>
+                    <button onClick={() => { deleteTag(t.id).then(window.location.reload()) }}>Delete</button>
                 </div>
             ))
         }
