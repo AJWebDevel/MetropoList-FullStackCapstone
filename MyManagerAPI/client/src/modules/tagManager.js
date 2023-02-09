@@ -1,6 +1,6 @@
 import { getToken } from "./authManager"
 
-const apiUrl = "api/"
+const apiUrl = "api/Tag"
 
 export const getAllTags = () => {
     return getToken().then((token) => {
@@ -18,4 +18,30 @@ export const getAllTags = () => {
             }
         });
     });
-}
+};
+
+export const addTag = (tag) => {
+    return getToken().then((token) => {
+        return fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(tag)
+        });
+    });
+};
+
+export const deleteTag = (id) => {
+    return getToken().then((token) => {
+        return fetch(apiUrl + `/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+
+        }).then((resp) => resp.json())
+    });
+};

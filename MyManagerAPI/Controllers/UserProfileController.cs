@@ -48,7 +48,7 @@ namespace MyManagerAPI.Controllers
 
         // POST: UserProfileController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult Create(UserProfile userProfile)
         {
        
@@ -57,17 +57,17 @@ namespace MyManagerAPI.Controllers
     
         }
 
-        // GET: UserProfileController/Edit/5
+        /* GET: UserProfileController/Edit/5
         [HttpPut]
         public ActionResult EditUser(int id)
         {
             return Ok();
-        }
+        }*/
 
         // POST: UserProfileController/Edit/5
-        [HttpPut("${id}")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, UserProfile userProfile)
+        [HttpPut("{id}")]
+      
+        public ActionResult EditUser(int id, UserProfile userProfile)
         {
             if (id != userProfile.Id)
             {

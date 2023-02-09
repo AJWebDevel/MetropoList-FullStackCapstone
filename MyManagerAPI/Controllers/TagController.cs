@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyManagerAPI.Models;
 using MyManagerAPI.Repositories;
 
 namespace MyManagerAPI.Controllers
@@ -35,17 +36,11 @@ namespace MyManagerAPI.Controllers
 
         // POST: TagController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Tag tag)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return Ok();
-            }
+         _tagRepository.AddTag(tag);
+                return CreatedAtAction("Get", new { id = tag.Id }, tag);
+           
         }
 
 
@@ -57,18 +52,12 @@ namespace MyManagerAPI.Controllers
         }*/
 
         // POST: TagController/Delete/5
-        [HttpDelete]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpDelete("{id}")]
+      
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return Ok();
-            }
+            _tagRepository.DeleteTag(id);
+            return NoContent();
         }
     }
 }

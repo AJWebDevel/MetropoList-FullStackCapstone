@@ -7,5 +7,7 @@ namespace MyManagerAPI.Repositories
     {
         public List<List> GetAllLists();
         public List<List> GetListsByUser(int id);
+        public void Update(List list);
+        
     }
 }

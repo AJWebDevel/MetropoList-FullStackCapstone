@@ -170,6 +170,30 @@ namespace MyManagerAPI.Repositories
                 }
             }
         }
+
+        //edit list
+        public void Update(List list)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE List
+                                SET IsPrivate = @IsPrivate
+                                    IsImportant = @IsImportant,
+                                    ListName = @ListName 
+                                WHERE Id = @Id;";
+                    DbUtils.AddParameter(cmd, "@IsPrivate", list.IsPrivate);
+                    DbUtils.AddParameter(cmd, "@IsImportant", list.IsImportant);
+                    DbUtils.AddParameter(cmd, "@ListName", list.ListName);
+                    DbUtils.AddParameter(cmd, "@Id", list.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
     

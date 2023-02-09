@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { currentUser, getUserById } from "../../modules/userManager";
 
 export const Profile = () => {
@@ -15,7 +15,7 @@ export const Profile = () => {
     if (user.id == id) {
         return (<div>
             <h3>{user.fullName}</h3>
-            <button>Edit Profile</button>
+            <Link to={`/editProfile/${user.id}`}>Edit Profile</Link>
         </div>)
 
     }

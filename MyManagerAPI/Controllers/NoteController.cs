@@ -6,37 +6,38 @@ namespace MyManagerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ListController : ControllerBase
+    public class NoteController : ControllerBase
     {
-        private readonly IListRepository _listRepository;
-        public ListController(IListRepository listRepository)
+        private readonly INoteRepository _noteRepository;
+        public NoteController(INoteRepository noteRepository)
         {
-            _listRepository = listRepository;
+            _noteRepository = noteRepository;
         }
 
-        // GET: ListController
+
+        /* GET: NoteController
         [HttpGet]
         public ActionResult Index()
         {
-            var lists = _listRepository.GetAllLists();
-            return Ok(lists);
-        }
+            var note = _noteRepository.GetNoteByUser();
+            return Ok(note);
+        }*/
 
+        // GET: NoteController/Details/5
         [HttpGet("{id}")]
-        public ActionResult ListsByUser(int id)
-        {
-            var UsersLists = _listRepository.GetListsByUser(id);
-            return Ok(UsersLists);
-        }
-
-        // GET: ListController/Details/5
-        [HttpGet("/ListDetails/{id}")]
         public ActionResult Details(int id)
         {
-            return Ok();
+            var note = _noteRepository.GetNoteByUser(id);
+            return Ok(note);
         }
 
-        // POST: ListController/Create
+        /* GET: NoteController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: NoteController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -47,19 +48,18 @@ namespace MyManagerAPI.Controllers
             }
             catch
             {
-                return Ok();
+                return View();
             }
         }
 
-        // GET: ListController/Edit/5
-        [HttpPut]
+        // GET: NoteController/Edit/5
         public ActionResult Edit(int id)
         {
-            return Ok();
-        }   
+            return View();
+        }
 
-        // POST: ListController/Edit/5
-        [HttpPut("${id}")]
+        // POST: NoteController/Edit/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
@@ -69,13 +69,18 @@ namespace MyManagerAPI.Controllers
             }
             catch
             {
-                return Ok();
+                return View();
             }
         }
 
+        // GET: NoteController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
 
-        // POST: ListController/Delete/5
-        [HttpDelete]
+        // POST: NoteController/Delete/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
@@ -85,8 +90,8 @@ namespace MyManagerAPI.Controllers
             }
             catch
             {
-                return Ok();
+                return View();
             }
-        }
+        } */
     }
 }

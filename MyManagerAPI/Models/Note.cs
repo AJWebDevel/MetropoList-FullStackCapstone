@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyManagerAPI.Models
@@ -10,6 +11,7 @@ namespace MyManagerAPI.Models
         public int  UserId { get; set; }
         public DateTime DateCreated { get; set; }
         public int ListId { get; set; }
+        public List List { get; set; }
         [Required]
         public string Text { get; set; }
     }

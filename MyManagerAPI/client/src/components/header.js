@@ -12,6 +12,7 @@ import {
 import { logout } from '../modules/authManager';
 import { currentUser } from '../modules/userManager';
 import AdminHome from './home/adminHome';
+import { NotesByUser } from './notes/notesByUser';
 
 //import { UserList } from './UserList';
 
@@ -45,7 +46,10 @@ export default function Header({ isLoggedIn }) {
                                     <NavLink tag={RRNavLink} to={`/Details/${user.id}`}>Profile</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to={`/ListByUser`}>My Lists</NavLink>
+                                    <NavLink tag={RRNavLink} to={`/ListByUser/${user.id}`}>My Lists</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to={`/NotesByUser/${user.id}`}>My Notes</NavLink>
                                 </NavItem>
 
 
