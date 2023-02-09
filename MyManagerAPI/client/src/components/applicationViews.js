@@ -7,8 +7,11 @@ import Register from "./auth/register";
 import AdminHome from "./home/adminHome";
 import { AllLists } from "./Lists/allLists";
 import { ListByUser } from "./Lists/listByUser";
+import { NotesByUser } from "./notes/notesByUser";
 import { Profile } from "./profile/details";
-import { Alltags } from "./tags/alltags";
+import { EditUserForm } from "./profile/editProfileform";
+import { AllTags } from "./tags/alltags";
+import { CreateTagForm } from "./tags/createTagForm";
 import { UserList } from "./users/userList";
 
 
@@ -50,12 +53,24 @@ export default function ApplicationViews({ isLoggedIn }) {
                         element={isLoggedIn ? <AllLists /> : <Navigate to="/allLists" />}
                     />
                     <Route
-                        path="listByUser"
-                        element={isLoggedIn ? <ListByUser /> : <Navigate to="/listByUser" />}
+                        path="listByUser/:id"
+                        element={isLoggedIn ? <ListByUser /> : <Navigate to="/listByUser/:id" />}
                     />
                     <Route
                         path="allTags"
-                        element={isLoggedIn ? <Alltags /> : <Navigate to="/allTags" />}
+                        element={isLoggedIn ? <AllTags /> : <Navigate to="/allTags" />}
+                    />
+                    <Route
+                        path="createTagForm"
+                        element={isLoggedIn ? <CreateTagForm /> : <Navigate to="/createTagForm" />}
+                    />
+                    <Route
+                        path="notesByUser/:id"
+                        element={isLoggedIn ? <NotesByUser /> : <Navigate to="/NotesByUser/:id" />}
+                    />
+                    <Route
+                        path="editProfile/:id"
+                        element={isLoggedIn ? <EditUserForm /> : <Navigate to="/editProfile/:id" />}
                     />
 
                     <Route path="login" element={<Login />} />

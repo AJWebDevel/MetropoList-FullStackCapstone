@@ -14,6 +14,16 @@ export const AllLists = () => {
             lists.map((l) => (
                 <div>
                     <p>{l.listName}</p>
+                    {l.tags.map((t) => {
+                        <p>{t.tag.TagName}</p>
+                    })}
+                    {l.dateCreated}
+                    {l.tasks.map((task) => {
+                        <div>
+                            <p>{task.title}</p>
+                            <p>{task.isImportant}</p>
+                        </div>
+                    })}
                 </div>
             ))
         }

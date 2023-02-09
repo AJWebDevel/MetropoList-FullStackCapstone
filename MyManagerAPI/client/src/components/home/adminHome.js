@@ -16,7 +16,7 @@ export default function AdminHome() {
         }}>
             <h3>What would you like to do?</h3>
             <div style={{}}><Link to={"/UserList"}>View All Users</Link></div>
-            <div><Link to={"/AllLists"}>View All Tags</Link></div>
+            <div><Link to={"/AllTags"}>View All Tags</Link></div>
             <div><Link to={"/AllLists"}>View All Lists</Link></div>
 
         </div>

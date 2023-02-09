@@ -58,4 +58,30 @@ export const getUserById = (id) => {
     });
 };
 
+export const addUser = (user) => {
+    return getToken().then((token) => {
+        return fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(user)
+        });
+    });
+};
+
+export const editUser = (user) => {
+    return getToken().then((token) => {
+        return fetch(apiUrl + `/${user.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(user)
+        });
+    });
+};
+
 

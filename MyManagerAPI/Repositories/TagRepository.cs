@@ -41,7 +41,38 @@ namespace MyManagerAPI.Repositories
         }
 
         //add tag
+        public void AddTag(Tag tag)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    INSERT INTO Tag (TagName)
+                    OUTPUT INSERTED.ID
+                    VALUES (@TagName);";
+
+                    DbUtils.AddParameter(cmd, "@TagName", tag.TagName);
+                    tag.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
         //delete tag
+        public void DeleteTag(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Tag
+                                       WHERE Id = @Id;";
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
 

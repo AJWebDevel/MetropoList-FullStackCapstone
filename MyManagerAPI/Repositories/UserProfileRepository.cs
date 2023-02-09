@@ -169,6 +169,7 @@ namespace MyManagerAPI.Repositories
         //update user
         public void Update(UserProfile userProfile)
         {
+
             using (var conn = Connection)
             {
                 conn.Open();
@@ -176,13 +177,13 @@ namespace MyManagerAPI.Repositories
                 {
                     cmd.CommandText = @"
                         UPDATE UserProfile
-                           SET FirstName = @Title,
-                               LastName = @Description,
-                               Email = @DateCreated,
-                               ProfileImageUrl = @Url,
-                         WHERE Id = @Id";
+                           SET FirstName = @FirstName,
+                               LastName = @LastName,
+                               Email = @Email,
+                               ProfileImageUrl = @ProfileImageUrl
+                         WHERE Id = @id";
 
-                    DbUtils.AddParameter(cmd, "@Firstname", userProfile.FirstName);
+                    DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);
                     DbUtils.AddParameter(cmd, "@LastName", userProfile.LastName);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
                     DbUtils.AddParameter(cmd, "@ProfileImageUrl", userProfile.ProfileImageUrl);

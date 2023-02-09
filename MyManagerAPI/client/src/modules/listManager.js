@@ -20,16 +20,16 @@ export const getAllLists = () => {
     });
 };
 
-export const getListsByUser = () => {
+export const getListsByUser = (id) => {
     return getToken().then((token) => {
-        return fetch(`${apiUrl}/userId`, {
+        return fetch(`${apiUrl}/${id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((resp) => {
             if (resp.ok) {
-                return resp.json
+                return resp.json();
             }
             else {
                 throw new Error("An unknown error as occured.");
