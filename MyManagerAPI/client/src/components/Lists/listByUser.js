@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getListsByUser } from "../../modules/listManager";
 import { currentUser } from "../../modules/userManager";
 
@@ -22,8 +22,12 @@ export const ListByUser = () => {
                     <p> {uL.tasks.map((t) => {
                         <p>{t.title}</p>
                     })}</p>
+                    <Link to={`/singleList/${uL.id}`}>Details</Link>
+
                 </div>
             ))
         }
+        <Link to={"/createListForm"}>Create New List</Link>
+        {/* <Link>Delete List</Link> */}
     </section>)
 }

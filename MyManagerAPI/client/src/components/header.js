@@ -22,10 +22,12 @@ export default function Header({ isLoggedIn }) {
     const [user, setUser] = useState({});
     const toggle = () => setIsOpen(!isOpen);
     useEffect(() => {
-        currentUser().then((u) => {
-            setUser(u)
-        })
-    }, []);
+        if (isLoggedIn) {
+            currentUser().then((u) => {
+                setUser(u)
+            })
+        }
+    }, [isLoggedIn]);
 
 
     return (
@@ -34,11 +36,10 @@ export default function Header({ isLoggedIn }) {
                 <NavbarBrand tag={RRNavLink} to="/">MyManager</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
-                    <Nav className="mr-auto" navbar>
 
-                        { /* When isLoggedIn === true, we will render the Home link */}
-                        {isLoggedIn &&
-                            <>
+                    {user.userTypeId == 1
+                        ? (<>
+                            <Nav className="mr-auto" navbar>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/adminHome">Home</NavLink>
                                 </NavItem>
@@ -51,21 +52,34 @@ export default function Header({ isLoggedIn }) {
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to={`/NotesByUser/${user.id}`}>My Notes</NavLink>
                                 </NavItem>
-
-
-
-                            </>
-                        }
-                    </Nav>
-
-                    <Nav navbar>
-                        {isLoggedIn &&
-                            <>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/" onClick={logout}>Logout</NavLink>
                                 </NavItem>
-                            </>
-                        }
+                            </Nav>
+                        </>)
+                        : (<>
+                            <Nav className="mr-auto" navbar>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/adminHome">Home</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to={`/Details/${user.id}`}>Profile</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to={`/ListByUser/${user.id}`}>My Lists</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to={`/NotesByUser/${user.id}`}>My Notes</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/" onClick={logout}>Logout</NavLink>
+                                </NavItem>
+                            </Nav>
+                        </>)}
+
+
+
+                    <Nav navbar>
                         {!isLoggedIn &&
                             <>
                                 <NavItem>
@@ -77,6 +91,7 @@ export default function Header({ isLoggedIn }) {
                                 </NavItem>
                             </>
                         }
+
                     </Nav>
                 </Collapse>
             </Navbar>

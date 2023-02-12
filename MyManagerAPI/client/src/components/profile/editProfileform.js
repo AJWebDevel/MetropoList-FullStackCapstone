@@ -29,6 +29,7 @@ export const EditUserForm = () => {
     return (<div>
         <form onSubmit={(e) => {
             e.preventDefault()
+
             updateUser()
         }}>
 

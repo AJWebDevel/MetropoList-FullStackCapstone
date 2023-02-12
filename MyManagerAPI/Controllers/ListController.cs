@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyManagerAPI.Models;
 using MyManagerAPI.Repositories;
 
 namespace MyManagerAPI.Controllers
@@ -33,51 +34,39 @@ namespace MyManagerAPI.Controllers
         [HttpGet("/ListDetails/{id}")]
         public ActionResult Details(int id)
         {
-            return Ok();
+            var list = _listRepository.GetListById(id);
+            return Ok(list);
         }
 
         // POST: ListController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(List list)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return Ok();
-            }
+            _listRepository.AddList(list);
+            return NoContent();
         }
 
-        // GET: ListController/Edit/5
-        [HttpPut]
-        public ActionResult Edit(int id)
-        {
-            return Ok();
-        }   
+
 
         // POST: ListController/Edit/5
-        [HttpPut("${id}")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpPut("{id}")]
+        public ActionResult Edit(int id, List list)
         {
-            try
+            if (id != list.UserId)
             {
-                return RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            catch
-            {
-                return Ok();
-            }
+            
+            _listRepository.Update(list);
+                return NoContent();
+            
         }
 
 
         // POST: ListController/Delete/5
         [HttpDelete]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {

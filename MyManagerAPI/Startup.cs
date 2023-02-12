@@ -31,6 +31,8 @@ namespace MyManagerAPI
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IListRepository, ListRepository>();
             services.AddTransient<ITagRepository, TagRepository>();
+            services.AddTransient<ITaskRepository, TaskRepository>();
+            services.AddTransient<IListTagRepository, ListTagRepository>();
             services.AddTransient<INoteRepository, NoteRepository>();
 
             services.AddControllers();

@@ -6,7 +6,11 @@ import Login from "./auth/login";
 import Register from "./auth/register";
 import AdminHome from "./home/adminHome";
 import { AllLists } from "./Lists/allLists";
+import { CreateListForm } from "./Lists/createListForm";
+import { EditListForm } from "./Lists/editListForm";
 import { ListByUser } from "./Lists/listByUser";
+import { SingleList } from "./Lists/singleList";
+import { CreateNoteForm } from "./notes/createNoteForm";
 import { NotesByUser } from "./notes/notesByUser";
 import { Profile } from "./profile/details";
 import { EditUserForm } from "./profile/editProfileform";
@@ -65,12 +69,29 @@ export default function ApplicationViews({ isLoggedIn }) {
                         element={isLoggedIn ? <CreateTagForm /> : <Navigate to="/createTagForm" />}
                     />
                     <Route
+                        path="createNoteForm"
+                        element={isLoggedIn ? <CreateNoteForm /> : <Navigate to="/createNoteForm" />}
+                    />
+                    <Route
                         path="notesByUser/:id"
                         element={isLoggedIn ? <NotesByUser /> : <Navigate to="/NotesByUser/:id" />}
                     />
                     <Route
                         path="editProfile/:id"
                         element={isLoggedIn ? <EditUserForm /> : <Navigate to="/editProfile/:id" />}
+                    />
+                    <Route
+                        path="singleList/:id"
+                        element={isLoggedIn ? <SingleList /> : <Navigate to="/singleList/:id" />}
+                    />
+                    <Route
+                        path="editListForm/:id"
+                        element={isLoggedIn ? <EditListForm /> : <Navigate to="/editListForm/:id" />}
+                    />
+
+                    <Route
+                        path="createListForm"
+                        element={isLoggedIn ? <CreateListForm /> : <Navigate to="/createListForm" />}
                     />
 
                     <Route path="login" element={<Login />} />

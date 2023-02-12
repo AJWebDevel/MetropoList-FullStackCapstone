@@ -9,6 +9,7 @@ namespace MyManagerAPI.Models
         public int Id { get; set; }
         [Required]
         public int ListId { get; set; }
+        public List List { get; set; }
         public DateTime DateDue { get; set; }
         [Required]
         public int UserId { get; set; }

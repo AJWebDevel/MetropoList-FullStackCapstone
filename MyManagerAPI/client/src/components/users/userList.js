@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
-import { getAllUsers } from "../../modules/userManager";
+import { currentUser, getAllUsers } from "../../modules/userManager";
 import User from "./user";
 
 
@@ -10,6 +10,7 @@ export const UserList = () => {
     useEffect(() => {
         getAllUsers().then(setUsers)
     }, []);
+
 
     return (<section>
         <h2>All MyManager Users</h2>

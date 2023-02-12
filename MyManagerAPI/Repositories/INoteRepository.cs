@@ -5,6 +5,9 @@ namespace MyManagerAPI.Repositories
 {
     public interface INoteRepository
     {
-        public Note GetNoteByUser(int id);
+        public List<Note> GetNotesByUser(int id);
+
+        public void DeleteNote(int id);
+        public void AddNote(Note note);
     }
 }
