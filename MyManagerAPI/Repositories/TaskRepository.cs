@@ -63,6 +63,54 @@ namespace MyManagerAPI.Repositories
                 }
             }
         }
+
+        //gettaskbyId
+        //gettasks bylistid
+        public Task GetTaskById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT t.Id AS TaskId, t.ListId, t.DateDue, t.UserId, t.IsImportant, t.Title, t.Description,
+                                l.Id AS LId, l.ListName
+                                FROM Task t
+                                JOIN List l ON l.Id = t.ListId
+                                WHERE t.Id = @id;";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        Task task = null; 
+                        while (reader.Read())
+                        {
+                         
+                                task = new Task()
+                                {
+                                    Id = DbUtils.GetInt(reader, "TaskId"),
+                                    ListId = DbUtils.GetInt(reader, "LId"),
+                                    DateDue = DbUtils.GetDateTime(reader, "DateDue"),
+                                    UserId = DbUtils.GetInt(reader, "UserId"),
+                                    IsImportant = DbUtils.GetBool(reader, "IsImportant"),
+                                    Title = DbUtils.GetString(reader, "Title"),
+                                    Description = DbUtils.GetString(reader, "Description"),
+                                    List = new List()
+                                    {
+                                        Id = DbUtils.GetInt(reader, "LId"),
+                                        ListName = DbUtils.GetString(reader, "ListName")
+                                    }
+                                };
+                        };
+                        return task;
+                    }
+                }
+            }
+        }
+
         //update
         public void UpdateTask(Task task)
         {

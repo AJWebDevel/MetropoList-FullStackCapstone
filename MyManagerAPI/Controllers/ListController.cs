@@ -65,7 +65,7 @@ namespace MyManagerAPI.Controllers
 
         // POST: ListController/Delete/5
         [HttpDelete]
-        [ValidateAntiForgeryToken]
+   
         public ActionResult Delete(int id)
         {
             try

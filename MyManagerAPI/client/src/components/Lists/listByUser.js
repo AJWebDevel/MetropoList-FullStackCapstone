@@ -19,15 +19,13 @@ export const ListByUser = () => {
             userLists.map((uL) => (
                 <div>
                     <p>{uL.listName}</p>
-                    <p> {uL.tasks.map((t) => {
-                        <p>{t.title}</p>
-                    })}</p>
-                    <Link to={`/singleList/${uL.id}`}>Details</Link>
 
+                    <Link to={`/singleList/${uL.id}`}>Details</Link>
+                    <button>Delete List</button>
                 </div>
             ))
         }
         <Link to={"/createListForm"}>Create New List</Link>
-        {/* <Link>Delete List</Link> */}
+
     </section>)
 }

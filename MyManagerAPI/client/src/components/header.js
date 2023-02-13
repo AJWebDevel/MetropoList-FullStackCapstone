@@ -39,7 +39,7 @@ export default function Header({ isLoggedIn }) {
 
                     {user.userTypeId == 1
                         ? (<>
-                            <Nav className="mr-auto" navbar>
+                            <Nav className="mr-auto " navbar>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/adminHome">Home</NavLink>
                                 </NavItem>
@@ -60,7 +60,7 @@ export default function Header({ isLoggedIn }) {
                         : (<>
                             <Nav className="mr-auto" navbar>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/adminHome">Home</NavLink>
+                                    <NavLink tag={RRNavLink} to="/userHome">Home</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to={`/Details/${user.id}`}>Profile</NavLink>
@@ -95,6 +95,6 @@ export default function Header({ isLoggedIn }) {
                     </Nav>
                 </Collapse>
             </Navbar>
-        </div>
+        </div >
     );
 }

@@ -25,6 +25,13 @@ namespace MyManagerAPI.Controllers
             return Ok(listTasks);
         }
 
+        [HttpGet("/TaskById/{id}")]
+        public ActionResult TaskById(int id)
+        {
+            var task = _taskRepository.GetTaskById(id);
+            return Ok(task);
+        }
+
         // POST: TaskController/Create
         [HttpPost]
         public ActionResult Create(Task task)

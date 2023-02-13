@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom";
-import { getNoteByUser } from "../../modules/noteManager";
+import { deleteNote, getNoteByUser } from "../../modules/noteManager";
 import { currentUser } from "../../modules/userManager";
 
 export const NotesByUser = () => {
@@ -19,9 +19,9 @@ export const NotesByUser = () => {
         <div>
             {notes.map((n) => {
                 return <>
-                    <p>Note{n.id}</p>
+                    <p>Note {n.id}</p>
                     <p>{n.text}</p>
-                    <button>Delete Note</button>
+                    <button onClick={() => { deleteNote(n.id).then(window.location.reload()) }}>Delete Note</button>
                 </>
             })}
         </div>

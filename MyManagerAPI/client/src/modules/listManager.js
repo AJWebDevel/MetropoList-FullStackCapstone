@@ -25,6 +25,7 @@ export const getListsByUser = (id) => {
         return fetch(`${apiUrl}/${id}`, {
             method: "GET",
             headers: {
+                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             }
         }).then((resp) => {
@@ -81,3 +82,5 @@ export const addList = (list) => {
         });
     });
 };
+
+//delete list

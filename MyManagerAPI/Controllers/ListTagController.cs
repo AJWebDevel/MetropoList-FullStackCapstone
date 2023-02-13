@@ -16,7 +16,7 @@ namespace MyManagerAPI.Controllers
 
         // GET: ListTagController/Details/5
         //getby list id
-        [HttpGet("{id}")]
+        [HttpGet("/ListTagsByList/{id}")]
         public ActionResult Details(int id)
         {
            var listTags = _listTagRepository.GetListTagByListId(id);
@@ -25,7 +25,7 @@ namespace MyManagerAPI.Controllers
 
 
         // POST: ListTagController/Create
-        [HttpPost("/Create")]
+        [HttpPost]
         public ActionResult Create(ListTag listTag)
         {
           _listTagRepository.AddListTag(listTag);

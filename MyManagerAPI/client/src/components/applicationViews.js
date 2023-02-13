@@ -5,6 +5,7 @@ import { currentUser } from "../modules/userManager";
 import Login from "./auth/login";
 import Register from "./auth/register";
 import AdminHome from "./home/adminHome";
+import UserHome from "./home/userHome";
 import { AllLists } from "./Lists/allLists";
 import { CreateListForm } from "./Lists/createListForm";
 import { EditListForm } from "./Lists/editListForm";
@@ -16,6 +17,8 @@ import { Profile } from "./profile/details";
 import { EditUserForm } from "./profile/editProfileform";
 import { AllTags } from "./tags/alltags";
 import { CreateTagForm } from "./tags/createTagForm";
+import { CreateTaskForm } from "./tasks/createTaskForm";
+import { EditTaskForm } from "./tasks/editTaskForm";
 import { UserList } from "./users/userList";
 
 
@@ -51,6 +54,10 @@ export default function ApplicationViews({ isLoggedIn }) {
                     <Route
                         path="adminHome"
                         element={isLoggedIn ? <AdminHome /> : <Navigate to="/adminHome" />}
+                    />
+                    <Route
+                        path="userHome"
+                        element={isLoggedIn ? <UserHome /> : <Navigate to="/userHome" />}
                     />
                     <Route
                         path="allLists"
@@ -92,6 +99,15 @@ export default function ApplicationViews({ isLoggedIn }) {
                     <Route
                         path="createListForm"
                         element={isLoggedIn ? <CreateListForm /> : <Navigate to="/createListForm" />}
+                    />
+
+                    <Route
+                        path="createTaskForm"
+                        element={isLoggedIn ? <CreateTaskForm /> : <Navigate to="/createTaskForm" />}
+                    />
+                    <Route
+                        path="editTaskForm/:id"
+                        element={isLoggedIn ? <EditTaskForm /> : <Navigate to="/editTaskForm/:id" />}
                     />
 
                     <Route path="login" element={<Login />} />

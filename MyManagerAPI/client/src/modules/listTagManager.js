@@ -4,7 +4,7 @@ const apiUrl = "api/ListTag"
 
 export const getListTagsByListId = (id) => {
     return getToken().then((token) =>
-        fetch(`${apiUrl}/${id}`, {
+        fetch(`/ListTagsByList/${id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -35,7 +35,7 @@ export const addListTag = (listTag) => {
 
 export const deleteListTag = (id) => {
     return getToken().then((token) => {
-        return fetch(apiUrl + `/${id}`, {
+        return fetch(apiUrl, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
