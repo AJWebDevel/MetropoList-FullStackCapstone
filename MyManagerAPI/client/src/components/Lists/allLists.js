@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 import { getAllLists } from "../../modules/listManager";
 
 export const AllLists = () => {
@@ -24,9 +25,12 @@ export const AllLists = () => {
                             <p>{task.isImportant}</p>
                         </div>
                     })}
+                    <Link to={`/singleList/${l.id}`}>Details</Link>
+
                 </div>
             ))
         }
+
     </section>
     )
 }

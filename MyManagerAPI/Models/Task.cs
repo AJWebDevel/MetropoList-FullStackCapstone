@@ -6,9 +6,11 @@ namespace MyManagerAPI.Models
 {
     public class Task
     {
-        public int Id { get; set; }
         [Required]
+        public int Id { get; set; }
+
         public int ListId { get; set; }
+        public List List { get; set; }
         public DateTime DateDue { get; set; }
         [Required]
         public int UserId { get; set; }

@@ -1,24 +1,34 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
-import { getNoteByUser } from "../../modules/noteManager";
+import { Link, useParams } from "react-router-dom";
+import { deleteNote, getNoteByUser } from "../../modules/noteManager";
 import { currentUser } from "../../modules/userManager";
 
 export const NotesByUser = () => {
     const { id } = useParams();
-    const [note, setNote] = useState({});
+    const [notes, setNotes] = useState([]);
 
 
     useEffect(() => {
 
-        getNoteByUser(id).then(setNote)
+        getNoteByUser(id).then(setNotes)
     }, []);
 
     return (<div>
         <h2>My Notes</h2>
 
         <div>
-            <p>Note{note.id}</p>
+            {notes.map((n) => {
+                return <section key={n.id}>
+                    <p >Note {n.id}</p>
+                    <p>{n.text}</p>
+                    <button onClick={() => { deleteNote(n.id).then(window.location.reload()) }}>Delete Note</button>
+                </section>
+            })}
         </div>
+        <div>
+            <Link to={`/createNoteForm`}>Create New Note</Link>
+        </div>
+
 
     </div>
     )

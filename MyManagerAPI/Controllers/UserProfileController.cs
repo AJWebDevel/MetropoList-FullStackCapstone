@@ -78,6 +78,7 @@ namespace MyManagerAPI.Controllers
                 return NoContent();
             
         }
+
         [HttpGet("{CurrentUser}")]
         public UserProfile GetCurrentUserProfile()
         {

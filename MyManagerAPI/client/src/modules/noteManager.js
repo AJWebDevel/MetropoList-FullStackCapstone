@@ -21,3 +21,28 @@ export const getNoteByUser = (id) => {
         });
     });
 };
+
+export const addNote = (note) => {
+    return getToken().then((token) => {
+        return fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(note)
+        });
+    });
+};
+
+export const deleteNote = (id) => {
+    return getToken().then((token) => {
+        return fetch(apiUrl + `/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+    });
+}

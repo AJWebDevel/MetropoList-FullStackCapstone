@@ -1,8 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Azure;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using MyManagerAPI.Models;
 using MyManagerAPI.Utils;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace MyManagerAPI.Repositories
@@ -12,7 +14,7 @@ namespace MyManagerAPI.Repositories
     {
         public NoteRepository(IConfiguration configuration) : base(configuration) { }
 
-        public Note GetNoteByUser(int id)
+        public List<Note> GetNotesByUser(int id)
         {
             using (var conn = Connection)
             {
@@ -23,19 +25,20 @@ namespace MyManagerAPI.Repositories
                        SELECT Note.Id AS NoteId, Note.UserId, Note.DateCreated, Note.Text, Note.ListId AS NoteListId,
                        List.Id AS ListId, List.ListName, List.UserId AS ListUserId, List.IsPrivate, List.DateCreated, List.IsImportant
                        FROM Note
-                       JOIN List ON List.Id = Note.ListId
+                       LEFT JOIN List ON List.Id = Note.ListId
                        WHERE Note.UserId = @id;";
 
                     DbUtils.AddParameter(cmd, "@id", id);
-                    Note existingNote = null;
+                    
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                     
+                     var notes = new List<Note>();
                         while (reader.Read())
                         {
-                        
-                            if (DbUtils.IsNotDbNull(reader, "NoteId"))
+                            var noteId = DbUtils.GetInt(reader, "NoteId");
+                            var existingNote = notes.FirstOrDefault(x => x.Id == noteId);
+                            if (existingNote == null)
                             {
                                 existingNote = new Note()
                                 {
@@ -46,6 +49,8 @@ namespace MyManagerAPI.Repositories
                                     ListId = DbUtils.GetInt(reader, "NoteListId"),
                                    
                                 };
+
+                                notes.Add(existingNote);
                                 
                             }
                             //getlistname
@@ -64,8 +69,50 @@ namespace MyManagerAPI.Repositories
 
                             }
                         };
-                        return existingNote;
+                        return notes;
                     }
+                }
+            }
+        }
+        //add note
+        public void AddNote(Note note)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    INSERT INTO Note (UserId, DateCreated, ListId, Text)
+                    OUTPUT INSERTED.ID
+                    VALUES (@UserId, @DateCreated, @ListId, @Text);"
+                    ;
+
+                    DbUtils.AddParameter(cmd, "@UserId", note.UserId);
+                    DbUtils.AddParameter(cmd, "@DateCreated", note.DateCreated);
+                    DbUtils.AddParameter(cmd, "@ListId", note.ListId);
+                    DbUtils.AddParameter(cmd, "@Text", note.Text);
+                    note.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        //delete note
+        public void DeleteNote(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    DELETE FROM Note
+                    WHERE Id = @Id;"
+                    ;
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                   cmd.ExecuteNonQuery();
                 }
             }
         }

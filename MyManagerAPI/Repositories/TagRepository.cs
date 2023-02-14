@@ -58,6 +58,7 @@ namespace MyManagerAPI.Repositories
                 }
             }
         }
+
         //delete tag
         public void DeleteTag(int id)
         {
@@ -73,6 +74,18 @@ namespace MyManagerAPI.Repositories
                 }
             }
         }
+
+      /*  public Tag GetTagById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, TagName FROM Tag WHERE Id = @Id;" ;
+                }
+            }
+        }*/
     }
 }
 

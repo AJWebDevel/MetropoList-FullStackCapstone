@@ -1,10 +1,10 @@
 import { getToken } from "./authManager";
 
-const apiUrl = "/api/List";
+const apiUrl = "/api/Task";
 
-export const getAllLists = () => {
+export const getTasksByList = (id) => {
     return getToken().then((token) => {
-        return fetch(apiUrl, {
+        return fetch(`${apiUrl}/${id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -20,57 +20,25 @@ export const getAllLists = () => {
     });
 };
 
-export const getListsByUser = (id) => {
+export const getTaskById = (id) => {
     return getToken().then((token) => {
-        return fetch(`${apiUrl}/${id}`, {
+        return fetch(`/TaskById/${id}`, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }).then((resp) => {
-            if (resp.ok) {
-                return resp.json();
-            }
-            else {
-                throw new Error("An unknown error as occured.");
-            }
-        });
-    });
-};
-
-export const getListById = (id) => {
-    return getToken().then((token) => {
-        return fetch(`/ListDetails/${id}`, {
-            method: "GET", headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }).then((resp) => {
-            if (resp.ok) {
-                return resp.json();
-            }
-            else {
-                throw new Error("An unknown error as occured.");
-            }
-        })
-    });
-};
-
-export const editList = (list) => {
-    return getToken().then((token) => {
-        return fetch(`${apiUrl}/${list.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(list)
+        }).then((resp) => {
+            if (resp.ok) {
+                return resp.json();
+            }
+            else {
+                throw new Error("Unknown error has occured.");
+            }
         });
     });
 };
 
-export const addList = (list) => {
+export const addTask = (task) => {
     return getToken().then((token) => {
         return fetch(apiUrl, {
             method: "POST",
@@ -78,20 +46,33 @@ export const addList = (list) => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify(list)
+            body: JSON.stringify(task)
         });
     });
 };
 
-//delete list
-export const deleteList = (id) => {
+export const editTask = (note) => {
+    return getToken().then((token) => {
+        return fetch(apiUrl + `/${note.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(note)
+        });
+    });
+}
+
+export const deleteTask = (id) => {
     return getToken().then((token) => {
         return fetch(apiUrl + `/${id}`, {
             method: "DELETE",
             headers: {
-
+                "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             }
         });
     });
-};
+}
+

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MyManagerAPI.Models;
 using MyManagerAPI.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -26,9 +27,9 @@ namespace MyManagerAPI.Repositories
                        lt.Id AS ListTagId, lt.ListId AS ListTagListId, lt.TagId AS ltTagId,
                        tg.Id AS TagId, tg.TagName
                        FROM List l
-                       JOIN Task t ON t.ListId = l.Id
-                       JOIN ListTag lt ON lt.ListId = l.Id
-                       JOIN Tag tg ON tg.Id = lt.TagId";
+                       LEFT JOIN Task t ON t.ListId = l.Id
+                       LEFT JOIN ListTag lt ON lt.ListId = l.Id
+                       LEFT JOIN Tag tg ON tg.Id = lt.TagId";
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -105,9 +106,9 @@ namespace MyManagerAPI.Repositories
                        lt.Id AS ListTagId, lt.ListId AS ListTagListId, lt.TagId AS ListTagTagId,
                        tg.Id AS TagId, tg.TagName
                        FROM List l
-                       JOIN Task t ON t.ListId = l.Id
-                       JOIN ListTag lt ON lt.ListId = l.Id
-                       JOIN Tag tg ON tg.Id = lt.TagId
+                       LEFT JOIN Task t ON t.ListId = l.Id
+                       LEFT JOIN ListTag lt ON lt.ListId = l.Id
+                       LEFT JOIN Tag tg ON tg.Id = lt.TagId
                        WHERE l.UserId = @id;";
 
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -171,6 +172,86 @@ namespace MyManagerAPI.Repositories
             }
         }
 
+        //get listbyid
+        public List GetListById (int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT l.Id AS ListId, l.UserId AS ListUserId, l.IsPrivate, l.DateCreated, l.IsImportant AS ListImportance, l.ListName,
+                       t.Id AS TaskId, t.ListId AS TaskListId, t.DateDue, t.UserId AS TaskUserId, t.IsImportant AS TaskImportance, t.Title, t.Description,
+                       lt.Id AS ListTagId, lt.ListId AS ListTagListId, lt.TagId AS ListTagTagId,
+                       tg.Id AS TagId, tg.TagName
+                       FROM List l
+                       LEFT JOIN Task t ON t.ListId = l.Id
+                       LEFT JOIN ListTag lt ON lt.ListId = l.Id
+                       LEFT JOIN Tag tg ON tg.Id = lt.TagId
+                       WHERE l.Id = @id;";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List existingList = null;
+                        
+                        while (reader.Read())
+                        {
+                           
+                          
+                                existingList = new List()
+                                {
+                                    Id = DbUtils.GetInt(reader, "ListId"),
+                                    UserId = DbUtils.GetInt(reader, "ListUserId"),
+                                    IsPrivate = DbUtils.GetBool(reader, "IsPrivate"),
+                                    DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                                    IsImportant = DbUtils.GetBool(reader, "ListImportance"),
+                                    ListName = DbUtils.GetString(reader, "ListName"),
+                                    Tasks = new List<Task>(),
+                                    Tags = new List<ListTag>()
+                                };
+                    
+                            //getting tasks
+                            if (DbUtils.IsNotDbNull(reader, "TaskId"))
+                            {
+                                existingList.Tasks.Add(new Task()
+                                {
+                                    Id = DbUtils.GetInt(reader, "TaskId"),
+                                    ListId = DbUtils.GetInt(reader, "TasklistId"),
+                                    DateDue = DbUtils.GetDateTime(reader, "DateDue"),
+                                    UserId = DbUtils.GetInt(reader, "TaskUserId"),
+                                    IsImportant = DbUtils.GetBool(reader, "TaskImportance"),
+                                    Title = DbUtils.GetString(reader, "Title"),
+                                    Description = DbUtils.GetString(reader, "Description")
+                                });
+                            }
+                            //getting listTags
+                            if (DbUtils.IsNotDbNull(reader, "ListTagId"))
+                            {
+                                existingList.Tags.Add(new ListTag()
+                                {
+                                    Id = DbUtils.GetInt(reader, "TaskId"),
+                                    ListId = DbUtils.GetInt(reader, "ListTagListId"),
+                                    TagId = DbUtils.GetInt(reader, "ListTagTagId"),
+                                    Tag = new Tag()
+                                    {
+                                        Id = DbUtils.GetInt(reader, "ListTagTagId"),
+                                        TagName = DbUtils.GetString(reader, "TagName")
+                                    }
+                                });
+                            
+                            }
+                           
+                        };
+                        return existingList;
+                    }
+                }
+            }
+        }
+
         //edit list
         public void Update(List list)
         {
@@ -181,7 +262,7 @@ namespace MyManagerAPI.Repositories
                 {
                     cmd.CommandText = @"
                                 UPDATE List
-                                SET IsPrivate = @IsPrivate
+                                SET IsPrivate = @IsPrivate,
                                     IsImportant = @IsImportant,
                                     ListName = @ListName 
                                 WHERE Id = @Id;";
@@ -203,7 +284,34 @@ namespace MyManagerAPI.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO ";
+                        INSERT INTO List (UserId, IsPrivate, DateCreated, IsImportant, ListName)
+                        OUTPUT INSERTED.ID
+                        VALUES (@UserId, @IsPrivate, @DateCreated, @IsImportant, @ListName);";
+                    DbUtils.AddParameter(cmd, "@UserId", list.UserId);
+                    DbUtils.AddParameter(cmd, "@IsPrivate", list.IsPrivate);
+                    DbUtils.AddParameter(cmd, "@DateCreated", list.DateCreated);
+                    DbUtils.AddParameter(cmd, "@IsImportant", list.IsImportant);
+                    DbUtils.AddParameter(cmd, "@ListName", list.ListName);
+                   
+                    list.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        //delete note by id
+        public void DeleteList(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            DELETE FROM List
+                            WHERE Id = @Id;";
+                    DbUtils.AddParameter(cmd, "Id", id);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
