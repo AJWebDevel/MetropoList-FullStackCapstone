@@ -14,6 +14,9 @@ export default function UserHome() {
             textAlign: "center",
         }}>
             <h3>What Can You Manage To Do Today?</h3>
+            <div>
+
+            </div>
 
 
         </div>

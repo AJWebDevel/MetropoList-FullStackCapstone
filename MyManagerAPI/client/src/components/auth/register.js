@@ -10,7 +10,7 @@ export default function Register() {
 
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
-
+    let [userTypeId, setUserTypeId] = useState(2);
     const [email, setEmail] = useState();
     const [profileImageUrl, setProfileImageUrl] = useState();
     const [password, setPassword] = useState();
@@ -26,8 +26,12 @@ export default function Register() {
                 lastName,
                 profileImageUrl,
                 email,
+                userTypeId,
             };
-            register(userProfile, password).then(() => navigate("/"));
+
+
+            register(userProfile, password)
+            navigate("/Home");
         }
     };
 

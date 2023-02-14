@@ -1,11 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
+import { getListsByUser } from "../../modules/listManager";
 import { addTask } from "../../modules/taskManager";
+import { currentUser } from "../../modules/userManager";
 
 export const CreateTaskForm = () => {
     const navigate = useNavigate();
     const [newTask, setNewTask] = useState({});
     const [user, setUser] = useState({});
+    const [allLists, setAllLists] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(0);
+
+    useEffect(() => {
+
+        currentUser().then(u => {
+            setUser(u)
+            getListsByUser(u.id).then(lists => setAllLists(lists));
+
+        });
+    }, []);
+
+    const onSelect = (e) => {
+        setSelectedOption(parseInt(e.target.value))
+    }
 
     const changeState = (e) => {
         const copy = { ...newTask }
@@ -14,11 +31,13 @@ export const CreateTaskForm = () => {
     };
 
     const addTaskToList = () => {
-        //set task.listid to list id using props(?)
-        addTask(newTask)
+        const copy = { ...newTask }
+        copy.userId = user.id;
+        copy.listId = selectedOption;
+        addTask(copy)
             .then(resp => {
                 if (resp.ok)
-                    navigate(`/singleList/${user.id}`)
+                    navigate(`/singleList/${selectedOption}`)
             })
     }
 
@@ -29,7 +48,18 @@ export const CreateTaskForm = () => {
                 e.preventDefault()
                 addTaskToList();
             }}>
+                <fieldset>
+                    <h5> Which List is This Task Related to?</h5>
+                    <select onChange={onSelect} value={selectedOption} >
+                        <option value={0}>Please Select A List</option>
+                        {
+                            allLists.map((l) => {
+                                return <option key={l.id} value={l.id}>{l.listName}</option>
 
+                            })
+                        }
+                    </select>
+                </fieldset>
                 <fieldset>
                     <label htmlFor="dateDue">Date Due</label>
                     <input name="dateDue" type="date" onChange={changeState} />

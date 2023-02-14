@@ -22,7 +22,7 @@ export const getListTagsByListId = (id) => {
 
 export const addListTag = (listTag) => {
     return getToken().then((token) => {
-        return fetch(apiUrl, {
+        return fetch("/CreateListTag", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const addListTag = (listTag) => {
 
 export const deleteListTag = (id) => {
     return getToken().then((token) => {
-        return fetch(apiUrl, {
+        return fetch(`/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

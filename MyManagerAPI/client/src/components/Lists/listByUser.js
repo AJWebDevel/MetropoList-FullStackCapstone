@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getListsByUser } from "../../modules/listManager";
+import { deleteList, getListsByUser } from "../../modules/listManager";
 import { currentUser } from "../../modules/userManager";
 
 
@@ -21,7 +21,7 @@ export const ListByUser = () => {
                     <p>{uL.listName}</p>
 
                     <Link to={`/singleList/${uL.id}`}>Details</Link>
-                    <button>Delete List</button>
+                    <button onClick={() => { deleteList(uL.id).then(window.location.reload()) }}>Delete List</button>
                 </div>
             ))
         }

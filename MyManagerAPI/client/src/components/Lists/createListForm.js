@@ -35,8 +35,12 @@ export const CreateListForm = () => {
 
     const onCheck = (e) => {
         const copy = { ...tag }
+
         if (e.target.checked) {
-            selectedTags.push(tag)
+            setTag(copy)
+            console.log(tag)
+
+            setSelectedTags(tags);
         }
     };
 

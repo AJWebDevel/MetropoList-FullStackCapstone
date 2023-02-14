@@ -84,3 +84,14 @@ export const addList = (list) => {
 };
 
 //delete list
+export const deleteList = (id) => {
+    return getToken().then((token) => {
+        return fetch(apiUrl + `/${id}`, {
+            method: "DELETE",
+            headers: {
+
+                "Authorization": `Bearer ${token}`
+            }
+        });
+    });
+};

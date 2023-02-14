@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-
 import { currentUser } from "../modules/userManager";
 import Login from "./auth/login";
+
 import Register from "./auth/register";
 import AdminHome from "./home/adminHome";
 import UserHome from "./home/userHome";
@@ -25,23 +25,21 @@ import { UserList } from "./users/userList";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
-    {
-        // const [user, setUser] = useState({});
-        // const getUser = () => {
-        //     currentUser().then(user => setUser(user));
-        // }
-        // useEffect(() => {
-        //     getUser();
-        // }, []);
-    }
+
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+
+        if (isLoggedIn) {
+            currentUser().then(user => setUser(user));
+        }
+    }, []);
+
     return (
         <main>
 
             <Routes>
                 <Route path="/">
-
-
-
 
                     <Route
                         path="UserList"
@@ -54,10 +52,6 @@ export default function ApplicationViews({ isLoggedIn }) {
                     <Route
                         path="adminHome"
                         element={isLoggedIn ? <AdminHome /> : <Navigate to="/adminHome" />}
-                    />
-                    <Route
-                        path="userHome"
-                        element={isLoggedIn ? <UserHome /> : <Navigate to="/userHome" />}
                     />
                     <Route
                         path="allLists"
@@ -110,12 +104,13 @@ export default function ApplicationViews({ isLoggedIn }) {
                         element={isLoggedIn ? <EditTaskForm /> : <Navigate to="/editTaskForm/:id" />}
                     />
 
-                    <Route path="login" element={<Login />} />
-                    <Route path="register" element={<Register />} />
-
-                    <Route path="*" element={<p>Whoops, nothing here...</p>} />
                 </Route>
+                <Route path="/Home" element={<AdminHome />} />
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
+
+                <Route path="*" element={<p>Whoops, nothing here...</p>} />
             </Routes>
-        </main>
+        </main >
     );
 };

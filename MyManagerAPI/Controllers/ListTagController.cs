@@ -25,7 +25,7 @@ namespace MyManagerAPI.Controllers
 
 
         // POST: ListTagController/Create
-        [HttpPost]
+        [HttpPost("/CreateListTag")]
         public ActionResult Create(ListTag listTag)
         {
           _listTagRepository.AddListTag(listTag);

@@ -154,7 +154,7 @@ namespace MyManagerAPI.Repositories
                                                                  Email, ProfileImageUrl, UserTypeId)
                                         OUTPUT INSERTED.ID
                                         VALUES (@FirebaseUserId, @FirstName, @LastName, 
-                                                @Email, @ImageLocation, @UserTypeId);";
+                                                @Email, @ProfileImageUrl, @UserTypeId);";
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
                     DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);
                     DbUtils.AddParameter(cmd, "@LastName", userProfile.LastName);

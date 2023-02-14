@@ -64,18 +64,13 @@ namespace MyManagerAPI.Controllers
 
 
         // POST: ListController/Delete/5
-        [HttpDelete]
+        [HttpDelete("{id}")]
    
         public ActionResult Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            _listRepository.DeleteList(id);
                 return Ok();
-            }
+            
         }
     }
 }

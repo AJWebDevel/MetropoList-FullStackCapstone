@@ -165,7 +165,7 @@ namespace MyManagerAPI.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO List (UserId, ListId, DateDue, IsImportant, Title, Description)
+                        INSERT INTO Task (UserId, ListId, DateDue, IsImportant, Title, Description)
                         OUTPUT INSERTED.ID
                         VALUES (@UserId, @ListId, @DateDue, @IsImportant, @Title, @Description);";
                     DbUtils.AddParameter(cmd, "@ListId", task.ListId);

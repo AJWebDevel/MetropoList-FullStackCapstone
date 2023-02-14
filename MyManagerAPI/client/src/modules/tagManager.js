@@ -1,6 +1,6 @@
 import { getToken } from "./authManager"
 
-const apiUrl = "api/Tag"
+const apiUrl = "/api/Tag"
 
 export const getAllTags = () => {
     return getToken().then((token) => {

@@ -1,16 +1,34 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
+import { getListsByUser } from "../../modules/listManager";
 import { editTask, getTaskById } from "../../modules/taskManager";
+import { currentUser } from "../../modules/userManager";
 
 
 export const EditTaskForm = () => {
     const navigate = useNavigate();
-    const [task, setTask] = useState({});
+    const [task, setTask] = useState({ listId: 0, dateDue: "0000-00-00", isImportant: false, title: "", description: "" });
     const [user, setUser] = useState({});
     const { id } = useParams();
+    const [allLists, setAllLists] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(0);
 
     useEffect(() => {
-        getTaskById(id).then(setTask)
+
+        currentUser().then(u => {
+            setUser(u)
+            getListsByUser(u.id).then(lists => setAllLists(lists));
+
+        });
+    }, []);
+
+    useEffect(() => {
+        getTaskById(id).then((t) => {
+
+            let date = new Date(t.dateDue)
+            t.formattedDate = date.toISOString().split('T')[0]
+            setTask(t);
+        })
     }, []);
 
     const changeState = (e) => {
@@ -18,16 +36,20 @@ export const EditTaskForm = () => {
         copy[e.target.name] = e.target.value
         setTask(copy)
     };
-
+    const onSelect = (e) => {
+        setSelectedOption(parseInt(e.target.value))
+    }
 
 
     const updateTask = () => {
-        //set task.listid to list id using props(?)
+        const copy = { ...task };
+        copy.userId = user.id
+        copy.listid = selectedOption;
         editTask(task)
-        // .then(resp => {
-        //     if (resp.ok)
-        //         navigate(`/singleList/${list.id}`)
-        // })
+            .then(resp => {
+                if (resp.ok)
+                    navigate(`/singleList/${selectedOption}`)
+            })
     }
 
     return (<>
@@ -37,10 +59,21 @@ export const EditTaskForm = () => {
                 e.preventDefault()
                 updateTask();
             }}>
+                <fieldset>
+                    <h5> Which List is This Task Related to?</h5>
+                    <select onChange={onSelect} value={selectedOption} >
+                        <option value={task.listId}>Please Select A List</option>
+                        {
+                            allLists.map((l) => {
+                                return <option key={l.id} value={l.id}>{l.listName}</option>
 
+                            })
+                        }
+                    </select>
+                </fieldset>
                 <fieldset>
                     <label htmlFor="dateDue">Date Due</label>
-                    <input name="dateDue" type="date" onChange={changeState} value={task.dateDue} />
+                    <input name="dateDue" type="date" onChange={changeState} value={task.formattedDate} />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="isImportant">Is this Task Important?</label>

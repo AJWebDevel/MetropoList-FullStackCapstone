@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
-import { getListsByUser } from "../../modules/listManager";
+import { getListById, getListsByUser } from "../../modules/listManager";
 import { addNote } from "../../modules/noteManager";
 import { currentUser } from "../../modules/userManager";
 
@@ -10,42 +10,42 @@ export const CreateNoteForm = () => {
     const [newNote, setNewNote] = useState({});
     const [allLists, setAllLists] = useState([]);
     const [chosenList, setChosenList] = useState({});
-
-
-
-
-    const getlists = () => {
-        getListsByUser(user.id).then(lists => setAllLists(lists));
-
-    }
+    const [selectedOption, setSelectedOption] = useState(0);
 
     useEffect(() => {
 
-        currentUser().then(u => setUser(u));
+        currentUser().then(u => {
+            setUser(u)
+            getListsByUser(u.id).then(lists => setAllLists(lists));
+
+        });
     }, []);
 
-    useEffect((e) => {
-        getlists();
-    }, [user])
 
-    const onSelect = (e) => {
-        e.target.type = "option"
-            ? <>
-                {newNote.tags}
-            </>
-            : <>
-            </>
-    };
 
     const changeState = (e) => {
         const copy = { ...newNote }
         copy[e.target.name] = e.target.value
         setNewNote(copy)
+
+    };
+    const onSelect = (e) => {
+
+        setSelectedOption(parseInt(e.target.value))
+
     };
 
     const addNewNote = () => {
-        newNote.userId = user.id;
-        addNote(newNote)
+        const copy = { ...newNote }
+        if (selectedOption) {
+            copy.listId = selectedOption;
+        }
+        else {
+            copy.listId = null;
+        }
+
+        copy.userId = user.id;
+        addNote(copy)
             .then(resp => {
                 if (resp.ok)
                     navigate(`/NotesByUser/${user.id}`)
@@ -62,15 +62,15 @@ export const CreateNoteForm = () => {
             <form onSubmit={(e) => {
                 e.preventDefault()
 
-                addNote()
+                addNewNote()
             }}>
                 <fieldset>
                     <h5>Is This Note Related to a List? Which one?</h5>
-                    <select>
-                        <option>Please Select A List</option>
+                    <select onChange={onSelect} value={selectedOption} >
+                        <option value={0}>Please Select A List</option>
                         {
                             allLists.map((l) => {
-                                return <option value={l.id} onChange={onSelect}>{l.listName}</option>
+                                return <option key={l.id} value={l.id}>{l.listName}</option>
 
                             })
                         }
