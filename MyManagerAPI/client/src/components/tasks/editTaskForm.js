@@ -7,7 +7,7 @@ import { currentUser } from "../../modules/userManager";
 
 export const EditTaskForm = () => {
     const navigate = useNavigate();
-    const [task, setTask] = useState({ listId: 0, dateDue: "0000-00-00", isImportant: false, title: "", description: "" });
+    const [task, setTask] = useState({});
     const [user, setUser] = useState({});
     const { id } = useParams();
     const [allLists, setAllLists] = useState([]);
@@ -31,6 +31,7 @@ export const EditTaskForm = () => {
         })
     }, []);
 
+    console.log(task)
     const changeState = (e) => {
         const copy = { ...task }
         copy[e.target.name] = e.target.value
@@ -48,7 +49,7 @@ export const EditTaskForm = () => {
         editTask(task)
             .then(resp => {
                 if (resp.ok)
-                    navigate(`/singleList/${selectedOption}`)
+                    navigate(`/singleList/${task.id}`)
             })
     }
 

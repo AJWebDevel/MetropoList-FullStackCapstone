@@ -17,7 +17,7 @@ export const ListByUser = () => {
         <h2>my Lists</h2>
         {
             userLists.map((uL) => (
-                <div>
+                <div key={uL.id}>
                     <p>{uL.listName}</p>
 
                     <Link to={`/singleList/${uL.id}`}>Details</Link>

@@ -44,11 +44,11 @@ export const EditListForm = () => {
             </fieldset>
             <fieldset>
                 <label htmlFor="isImportant">Make List Important?</label>
-                <input name="isImportant" type="checkbox" onChange={changeState} />
+                <input name="isImportant" type="checkbox" onChange={changeState} value={list.isImportant} />
             </fieldset>
             <fieldset>
                 <label htmlFor="isPrivate">Make List Private?</label>
-                <input name="isPrivate" type="checkbox" onChange={changeState} />
+                <input name="isPrivate" type="checkbox" onChange={changeState} value={list.isPrivate} />
             </fieldset>
             <input type="submit" value="Submit" />
         </form>

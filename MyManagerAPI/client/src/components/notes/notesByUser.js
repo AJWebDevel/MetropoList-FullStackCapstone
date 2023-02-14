@@ -18,11 +18,11 @@ export const NotesByUser = () => {
 
         <div>
             {notes.map((n) => {
-                return <>
-                    <p>Note {n.id}</p>
+                return <section key={n.id}>
+                    <p >Note {n.id}</p>
                     <p>{n.text}</p>
                     <button onClick={() => { deleteNote(n.id).then(window.location.reload()) }}>Delete Note</button>
-                </>
+                </section>
             })}
         </div>
         <div>
