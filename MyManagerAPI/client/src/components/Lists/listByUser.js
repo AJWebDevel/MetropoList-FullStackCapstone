@@ -7,6 +7,12 @@ import { currentUser } from "../../modules/userManager";
 export const ListByUser = () => {
     const { id } = useParams();
     const [userLists, setUserLists] = useState([]);
+    const [user, setUser] = useState({});
+
+
+    useEffect(() => {
+        currentUser().then(user => setUser(user));
+    }, []);
 
     useEffect(() => {
         getListsByUser(id).then((u) => setUserLists(u));

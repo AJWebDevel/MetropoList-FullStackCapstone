@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using MyManagerAPI.Models;
 using MyManagerAPI.Utils;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace MyManagerAPI.Repositories
                                     UserId = DbUtils.GetInt(reader, "UserId"),
                                     DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
                                     Text = DbUtils.GetString(reader, "Text"),
-                                    ListId = DbUtils.GetInt(reader, "NoteListId"),
+                                    ListId = DbUtils.GetNullableInt(reader, "NoteListId"),
                                    
                                 };
 
@@ -90,7 +91,7 @@ namespace MyManagerAPI.Repositories
 
                     DbUtils.AddParameter(cmd, "@UserId", note.UserId);
                     DbUtils.AddParameter(cmd, "@DateCreated", note.DateCreated);
-                    DbUtils.AddParameter(cmd, "@ListId", note.ListId);
+                    DbUtils.AddParameter(cmd, "@ListId", note.ListId == null ? DBNull.Value : note.ListId);
                     DbUtils.AddParameter(cmd, "@Text", note.Text);
                     note.Id = (int)cmd.ExecuteScalar();
                 }

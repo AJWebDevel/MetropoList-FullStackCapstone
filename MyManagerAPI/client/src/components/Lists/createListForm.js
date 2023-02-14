@@ -33,28 +33,14 @@ export const CreateListForm = () => {
         setNewList(copy)
     }
 
-    const onCheck = (e) => {
-        const copy = { ...tag }
 
-        if (e.target.checked) {
-            setTag(copy)
-            console.log(tag)
-
-            setSelectedTags(tags);
-        }
-    };
 
     const addNewList = () => {
         newList.userId = user.id;
         addList(newList)
             .then(resp => {
                 if (resp.ok)
-                    selectedTags.length > 0
-                        ? selectedTags.map((s) => {
-                            addListTag(s)
-                            navigate(`/listByUser/${user.id}`)
-                        })
-                        : navigate(`/listByUser/${user.id}`)
+                    navigate(`/listByUser/${user.id}`)
 
             })
     }
@@ -69,19 +55,7 @@ export const CreateListForm = () => {
         }}>
 
 
-            <fieldset>
 
-
-                {tags.map((t) => {
-                    return <>
-                        <label htmlFor="listTags">{t.tagName}</label>
-                        {/* //event listener */}
-                        <input type="checkbox" name="listTags" onChange={onCheck} value={t} />
-                    </>
-                })}
-
-
-            </fieldset>
             <fieldset>
                 <label htmlFor="listName">List Name</label>
                 <input name="listName" onChange={changeState} value={newList.listName} />

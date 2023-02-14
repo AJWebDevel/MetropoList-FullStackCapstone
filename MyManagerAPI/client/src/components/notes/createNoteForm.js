@@ -40,9 +40,7 @@ export const CreateNoteForm = () => {
         if (selectedOption) {
             copy.listId = selectedOption;
         }
-        else {
-            copy.listId = null;
-        }
+
 
         copy.userId = user.id;
         addNote(copy)

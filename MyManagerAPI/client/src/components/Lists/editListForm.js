@@ -5,7 +5,7 @@ import { editList, getListById } from "../../modules/listManager";
 export const EditListForm = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [list, setList] = useState({});
+    const [list, setList] = useState({ listName: "", isImportant: false, isPrivate: false });
 
     useEffect(() => {
         getListById(id).then(setList)

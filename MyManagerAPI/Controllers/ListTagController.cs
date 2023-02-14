@@ -5,7 +5,9 @@ using MyManagerAPI.Repositories;
 
 namespace MyManagerAPI.Controllers
 {
-    public class ListTagController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ListTagController : ControllerBase
     {
         private readonly IListTagRepository _listTagRepository;
         public ListTagController(IListTagRepository listTagRepository)
@@ -16,7 +18,7 @@ namespace MyManagerAPI.Controllers
 
         // GET: ListTagController/Details/5
         //getby list id
-        [HttpGet("/ListTagsByList/{id}")]
+        [HttpGet("ListTagsByList/{id}")]
         public ActionResult Details(int id)
         {
            var listTags = _listTagRepository.GetListTagByListId(id);
@@ -25,7 +27,7 @@ namespace MyManagerAPI.Controllers
 
 
         // POST: ListTagController/Create
-        [HttpPost("/CreateListTag")]
+        [HttpPost("CreateListTag")]
         public ActionResult Create(ListTag listTag)
         {
           _listTagRepository.AddListTag(listTag);

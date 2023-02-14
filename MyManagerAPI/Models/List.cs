@@ -13,7 +13,7 @@ namespace MyManagerAPI.Models
         public bool IsPrivate { get; set; }
         public DateTime DateCreated { get; set; }
         public bool IsImportant { get; set; }
-        [Required]
+      
         [MaxLength(50)]
         public string ListName { get; set; }
         public List<Task> Tasks { get; set; }

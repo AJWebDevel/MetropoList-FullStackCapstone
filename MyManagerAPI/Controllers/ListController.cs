@@ -1,18 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyManagerAPI.Models;
 using MyManagerAPI.Repositories;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace MyManagerAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ListController : ControllerBase
     {
         private readonly IListRepository _listRepository;
-        public ListController(IListRepository listRepository)
+        private readonly IUserProfileRepository _userProfileRepository;
+        public ListController(IListRepository listRepository, IUserProfileRepository userProfileRepository)
         {
             _listRepository = listRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
         // GET: ListController
@@ -47,12 +53,21 @@ namespace MyManagerAPI.Controllers
         }
 
 
+      
+       private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+
+        }
+
+
 
         // POST: ListController/Edit/5
         [HttpPut("{id}")]
-        public ActionResult Edit(int id, List list)
+        public ActionResult Edit( List list)
         {
-            if (id != list.UserId)
+            if ( GetCurrentUserProfile().Id != list.UserId)
             {
                 return BadRequest();
             }

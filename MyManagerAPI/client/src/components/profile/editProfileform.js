@@ -6,7 +6,7 @@ import { ListByUser } from "../Lists/listByUser";
 export const EditUserForm = () => {
     const navigate = useNavigate()
     const { id } = useParams();
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({ email: "", firstName: "", lastName: "", profileImageUrl: "" });
     useEffect(() => {
         getUserById(id).then(setUser)
     }, []);
