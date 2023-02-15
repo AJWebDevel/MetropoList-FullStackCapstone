@@ -20,18 +20,24 @@ export const ListByUser = () => {
 
 
     return (<section>
-        <h2>my Lists</h2>
-        {
-            userLists.map((uL) => (
-                <div key={uL.id}>
-                    <p>{uL.listName}</p>
+        <h2 className="text-2xl text-center" >My Lists</h2>
+        <div className="text-center flex flex-col p-3">
+            {
+                userLists.map((uL) => (
+                    <div key={uL.id}>
+                        <p>{uL.listName}</p>
 
-                    <Link to={`/singleList/${uL.id}`}>Details</Link>
-                    <button onClick={() => { deleteList(uL.id).then(window.location.reload()) }}>Delete List</button>
-                </div>
-            ))
-        }
-        <Link to={"/createListForm"}>Create New List</Link>
+                        <Link to={`/singleList/${uL.id}`}>Details</Link>
+                        //no reload, go get all
+                        <button onClick={() => { deleteList(uL.id).then(window.location.reload()) }}>Delete List</button>
+                    </div>
+                ))
+            }
+        </div>
+        <div className="box-content h-20 w-32 p-4 border-4 ">
+            <Link to={"/createListForm"}>Create New List</Link>
+        </div>
+
 
     </section>)
 }

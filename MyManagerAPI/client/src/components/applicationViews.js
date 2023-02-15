@@ -36,9 +36,9 @@ export default function ApplicationViews({ isLoggedIn }) {
     }, []);
 
     return (
-        <main>
+        <main  >
 
-            <Routes>
+            <Routes >
                 <Route path="/">
 
                     <Route

@@ -88,7 +88,6 @@ namespace MyManagerAPI.Repositories
                         Task task = null; 
                         while (reader.Read())
                         {
-                         
                                 task = new Task()
                                 {
                                     Id = DbUtils.GetInt(reader, "TaskId"),

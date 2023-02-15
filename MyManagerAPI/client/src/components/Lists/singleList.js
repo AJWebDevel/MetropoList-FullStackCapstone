@@ -42,7 +42,7 @@ export const SingleList = () => {
         {list.userId == user.id ?
             <>
                 <p>{list.listName}</p>
-                {list?.tags?.map((ts) => {
+                {tags.map((ts) => {
                     return <div key={ts.id}>
                         <p >{ts?.tag?.tagName}</p>
                         <button onClick={() => { deleteListTag(ts.id) }}>Delete Tag</button>
