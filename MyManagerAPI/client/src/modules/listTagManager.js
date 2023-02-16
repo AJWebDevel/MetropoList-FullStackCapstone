@@ -1,10 +1,10 @@
 import { getToken } from "./authManager";
 
-const apiUrl = "api/ListTag"
+const apiUrl = "/api/ListTag"
 
 export const getListTagsByListId = (id) => {
     return getToken().then((token) =>
-        fetch(`/ListTagsByList/${id}`, {
+        fetch(`${apiUrl}/ListTagsByList/${id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -22,7 +22,7 @@ export const getListTagsByListId = (id) => {
 
 export const addListTag = (listTag) => {
     return getToken().then((token) => {
-        return fetch("/CreateListTag", {
+        return fetch(`${apiUrl}/CreateListTag`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const addListTag = (listTag) => {
 
 export const deleteListTag = (id) => {
     return getToken().then((token) => {
-        return fetch(`/${id}`, {
+        return fetch(`${apiUrl}/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

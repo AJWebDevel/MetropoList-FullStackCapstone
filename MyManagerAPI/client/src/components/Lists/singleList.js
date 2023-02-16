@@ -5,6 +5,7 @@ import { addListTag, deleteListTag, getListTagsByListId } from "../../modules/li
 import { addTag, deleteTag, getAllTags } from "../../modules/tagManager";
 import { deleteTask } from "../../modules/taskManager";
 import { currentUser } from "../../modules/userManager";
+import { NewListTagForm } from "./addListTagForm";
 
 
 export const SingleList = () => {
@@ -13,13 +14,8 @@ export const SingleList = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [tags, setTags] = useState([]);
-    const [optionalTags, setOptionalTags] = useState([]);
-    const [newTag, setNewTag] = useState({});
-    const [selectedOption, setSelectedOption] = useState(0);
 
-    useEffect(() => {
-        getAllTags().then((t) => setOptionalTags(t))
-    }, []);
+
 
     useEffect(() => {
         currentUser().then(user => setUser(user));
@@ -34,81 +30,75 @@ export const SingleList = () => {
 
     useEffect((e) => {
 
-        getListTagsByListId(user.id).then((t) => setTags(t))
+        getListTagsByListId(id).then((t) => setTags(t))
 
     }, [user]);
 
-    const onSelect = (e) => {
-        setSelectedOption(parseInt(e.target.value))
-    }
 
-    const addATag = () => {
-        newTag.tagId = selectedOption;
-        var correctTag = optionalTags.filter((o) => o.id = selectedOption)
 
-        newTag.listId = parseInt(id);
-        addListTag(newTag)
-    }
-
-    return (<section>
+    return (<section className="flex flex-col items-center p-6 ">
+        <p className="text-white font-metro text-2xl underline m-2">{list.listName}</p>
 
         {list.userId == user.id ?
-            <>
-                <p>{list.listName}</p>
-                {list?.tags?.map((ts) => {
-                    return <>
-                        <p key={ts.id}>{ts?.tag?.tagName}</p>
-                        <button onClick={() => { deleteListTag(ts.id) }}>Delete Tag</button>
-                    </>
-                })}
+            <div className="border-4 rounded p-8 bg-forrest text-white font-techno">
+
                 <div>
-                    <h6>Add New Tag?</h6>
-                    <form onSubmit={(e) => {
-                        e.preventDefault()
-                        addATag()
-                    }}>
-                        <fieldset>
-                            <select onChange={onSelect} value={selectedOption}>
-                                <option value={0}>Please Choose Tag</option>
-                                {optionalTags.map((oT => {
-                                    return <>
-                                        <option value={oT.id}>{oT.tagName}</option>
-                                    </>
-                                }))}
-
-
-                            </select>
-                        </fieldset>
-                        <input type="submit" value="Submit" />
-
-
-                    </form>
+                    <p className="underline font-bold">
+                        Labels
+                    </p>
+                    {tags.map((ts) => {
+                        return <div key={ts.id}>
+                            <p className="font-bold">{ts?.tag?.tagName}</p>
+                            <button onClick={() => { deleteListTag(ts.id) }}
+                                className="hover:underline bg-liteSoot h-8 w-40 text-sm flex justify-center rounded border-white border-2 p-1 m-4 ">Delete Tag</button>
+                        </div>
+                    })}
                 </div>
-                <p>{list.dateCreated}</p>
-                <div>
-                    <b>Tasks</b>
+
+                <div className="flex justify-center p-4">
+                    <NewListTagForm />
+                </div>
+                <p className="text-lg p-4">Created: {list.dateCreated}</p>
+                <div className="border-2 p-2 rounded">
+                    <b className="underline">To-Dos</b>
                     {list?.tasks?.map((t) => {
 
-                        return <><p key={t.id}>{t?.title}</p>
-                            <button onClick={() => navigate(`/editTaskForm/${id}`)}>Edit Task</button>
-                            <button onClick={() => deleteTask(t.id)}>Delete Task</button></>
+                        return <div key={t.id} className="border-2 rounded  bg-maroon m-2">
+                            <div className="border-2 p-2 m-2 bg-forrest rounded">
+                                <p className="underline" >{t?.title}</p>
+                                <p>{t?.description}</p>
+                            </div>
+                            <div>
+                                <button onClick={() => deleteTask(t.id)}
+                                    className="hover:underline bg-liteSoot h-8 w-40 text-sm flex justify-center rounded border-white border-2 p-1 m-4 ">Delete To-Do</button></div>
+                        </div>
 
                     })}
-                    <div>
-                        <button onClick={() => navigate(`/createTaskForm`)}>Create New Task</button>
+                    <div className="flex justify-center">
+                        <button onClick={() => navigate(`/createTaskForm`)}
+                            className="hover:underline bg-liteSoot h-8 w-40 text-sm  rounded border-white border-2 p-1 m-4 ">Create New To-Do</button>
                     </div>
 
                 </div>
+                <div className="flex justify-center m-4">
+                    <Link to={`/editListForm/${list.id}`}
+                        className="hover:underline  box-content h-4 pt-2 w-40 rounded p-4 border-4 text-lg rounded bg-maroon text-white text-center ">Edit Docket</Link>
+                </div>
 
-                <Link to={`/editListForm/${list.id}`}>Edit List </Link>
 
-            </>
-            : <><p>{list.listName}</p>
+            </div>
+            : <div className="flex flex-col items-center text-white text-center p-6">
+                <p>Created {list.dateCreated}</p>
                 {list?.tasks?.map((t) => {
-                    return <p key={t.id}>title{t?.title}</p>
+                    return <div key={t.id} className="border-2 rounded  bg-maroon m-2">
+                        <div className="border-2 p-2 m-2 bg-forrest rounded">
+                            <p >To-Do: {t?.title}</p>
+                            <p>{t?.description}</p>
+                        </div>
+                    </div>
                 })}
-                <p>{list.dateCreated}</p>
-            </>
+
+            </div>
         }
 
 

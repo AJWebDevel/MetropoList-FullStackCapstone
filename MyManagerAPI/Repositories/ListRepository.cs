@@ -155,16 +155,20 @@ namespace MyManagerAPI.Repositories
                             {
                                 existingList.Tags.Add(new ListTag()
                                 {
-                                    Id = DbUtils.GetInt(reader, "TaskId"),
+                                    Id = DbUtils.GetInt(reader, "ListTagId"),
                                     ListId = DbUtils.GetInt(reader, "ListTagListId"),
                                     TagId = DbUtils.GetInt(reader, "ListTagTagId"),
+
                                     Tag = new Tag()
-                                    {
-                                        Id = DbUtils.GetInt(reader, "ListTagTagId"),
-                                        TagName = DbUtils.GetString(reader, "TagName")
-                                    }
+                                {
+                                       
+                                    Id = DbUtils.GetInt(reader, "ListTagTagId"),
+                                    TagName = DbUtils.GetString(reader, "TagName")
+                                }
+                                    
                                 });
                             }
+
                         };
                         return lists;
                     }
@@ -233,7 +237,7 @@ namespace MyManagerAPI.Repositories
                             {
                                 existingList.Tags.Add(new ListTag()
                                 {
-                                    Id = DbUtils.GetInt(reader, "TaskId"),
+                                    Id = DbUtils.GetInt(reader, "ListTagId"),
                                     ListId = DbUtils.GetInt(reader, "ListTagListId"),
                                     TagId = DbUtils.GetInt(reader, "ListTagTagId"),
                                     Tag = new Tag()

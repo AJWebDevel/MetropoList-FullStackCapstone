@@ -17,7 +17,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <Router  >
       <Header isLoggedIn={isLoggedIn} />
       <ApplicationViews isLoggedIn={isLoggedIn} />
     </Router>
