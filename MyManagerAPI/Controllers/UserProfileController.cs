@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace MyManagerAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase

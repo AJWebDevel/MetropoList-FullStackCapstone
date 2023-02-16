@@ -34,7 +34,7 @@ export default function Header({ isLoggedIn }) {
         <div>
             <Navbar className='bg-forrest shadow-xl rounded text-white' expand="md">
                 <div className='ml-4 pt-2 '>
-                    <NavbarBrand className='font-metro text-2xl' tag={RRNavLink} to="/">Metropo-List</NavbarBrand>
+                    <NavbarBrand className='font-metro text-2xl' tag={RRNavLink} to="/">METROPO-LIST</NavbarBrand>
 
                 </div>
                 <NavbarToggler onClick={toggle} />
@@ -42,7 +42,7 @@ export default function Header({ isLoggedIn }) {
                     {isLoggedIn
                         ? user.userTypeId == 1
                             ? (<section className='bg-lite-forrest ' >
-                                <Nav className="flex justify-evenly p-1 -mt-2 " navbar>
+                                <Nav className="flex justify-evenly p-1 -mt-2 font-techno" navbar>
                                     <NavItem className='ml-5'>
                                         <NavLink className='ml-5' tag={RRNavLink} to="/adminHome">Home</NavLink>
                                     </NavItem>
@@ -61,7 +61,7 @@ export default function Header({ isLoggedIn }) {
                                 </Nav>
                             </section>)
                             : (<section className='bg-lite-forrest '>
-                                <Nav className="flex justify-evenly p-1 -mt-2 " navbar>
+                                <Nav className="flex justify-evenly p-1 -mt-2 font-techno " navbar>
                                     <NavItem className='ml-5'>
                                         <NavLink tag={RRNavLink} to="/adminHome">Home</NavLink>
                                     </NavItem>
@@ -80,13 +80,16 @@ export default function Header({ isLoggedIn }) {
                                 </Nav>
                             </section>)
                         : <section className='bg-lite-forrest'>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/login">Login</NavLink>
-                            </NavItem>
+                            <Nav className="flex justify-evenly p-1 -mt-2 font-techno" navbar>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/login">Login</NavLink>
+                                </NavItem>
 
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/Register">Register</NavLink>
-                            </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/Register">Register</NavLink>
+                                </NavItem>
+                            </Nav>
+
                         </section>
                     }
 
