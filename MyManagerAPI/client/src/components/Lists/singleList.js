@@ -36,40 +36,56 @@ export const SingleList = () => {
 
 
 
-    return (<section>
-
+    return (<section className="flex flex-col items-center p-6 ">
+        <p className="text-white font-metro text-2xl">{list.listName}</p>
 
         {list.userId == user.id ?
-            <>
-                <p>{list.listName}</p>
-                {tags.map((ts) => {
-                    return <div key={ts.id}>
-                        <p >{ts?.tag?.tagName}</p>
-                        <button onClick={() => { deleteListTag(ts.id) }}>Delete Tag</button>
-                    </div>
-                })}
+            <div className="border-4 rounded p-8 bg-forrest text-white font-techno">
+
                 <div>
+                    <p className="underline font-bold">
+                        Tags
+                    </p>
+                    {tags.map((ts) => {
+                        return <div key={ts.id}>
+                            <p className="font-bold">{ts?.tag?.tagName}</p>
+                            <button onClick={() => { deleteListTag(ts.id) }}
+                                className="hover:underline bg-liteSoot h-8 w-40 text-sm flex justify-center rounded border-white border-2 p-1 m-4 ">Delete Tag</button>
+                        </div>
+                    })}
+                </div>
+
+                <div className="flex justify-center p-4">
                     <NewListTagForm />
                 </div>
-                <p>{list.dateCreated}</p>
-                <div>
-                    <b>Tasks</b>
+                <p className="text-lg p-4">Created: {list.dateCreated}</p>
+                <div className="border-2 p-2 rounded">
+                    <b className="underline">Tasks</b>
                     {list?.tasks?.map((t) => {
 
-                        return <div key={t.id}><p >{t?.title}</p>
-                            <button onClick={() => navigate(`/editTaskForm/${id}`)}>Edit Task</button>
-                            <button onClick={() => deleteTask(t.id)}>Delete Task</button></div>
+                        return <div key={t.id} className="border-2 rounded  bg-maroon m-2">
+                            <div className="border-2 p-2 m-2 bg-forrest rounded">
+                                <p className="underline" >{t?.title}</p>
+                                <p>{t?.description}</p>
+                            </div>
+
+                            <button onClick={() => deleteTask(t.id)}
+                                className="hover:underline bg-liteSoot h-8 w-40 text-sm flex justify-center rounded border-white border-2 p-1 m-4 ">Delete Task</button></div>
 
                     })}
-                    <div>
-                        <button onClick={() => navigate(`/createTaskForm`)}>Create New Task</button>
+                    <div className="flex justify-center">
+                        <button onClick={() => navigate(`/createTaskForm`)}
+                            className="hover:underline bg-liteSoot h-8 w-40 text-sm  rounded border-white border-2 p-1 m-4 ">Create New Task</button>
                     </div>
 
                 </div>
+                <div className="flex justify-center m-4">
+                    <Link to={`/editListForm/${list.id}`}
+                        className="hover:underline  box-content h-4 pt-2 w-40 rounded p-4 border-4 text-lg rounded bg-maroon text-white text-center ">Edit List </Link>
+                </div>
 
-                <Link to={`/editListForm/${list.id}`}>Edit List </Link>
 
-            </>
+            </div>
             : <><p>{list.listName}</p>
                 {list?.tasks?.map((t) => {
                     return <p key={t.id}>title{t?.title}</p>

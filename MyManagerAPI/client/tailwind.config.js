@@ -6,11 +6,11 @@ module.exports = {
     {
       colors: {
         'selective': "#FCBA04",
-        'maroon': "#400913",
-        'forrest': "#012619",
-        'lite-forrest': "#143B2D",
+        'maroon': "#D9910D",
+        'forrest': "#0E1A59",
+        'lite-forrest': "#122173",
         'soot': "#44474A",
-        'liteSoot': "#C7CFD9",
+        'liteSoot': "#16288C",
         'lite-maroon': "#5A1C28"
 
       },

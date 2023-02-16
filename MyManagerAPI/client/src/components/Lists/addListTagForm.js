@@ -53,12 +53,14 @@ export const NewListTagForm = () => {
     }
 
     return (<>
-        <section>
+        <section className="text-black">
+            <h4 className="text-white text-center">Add A Tag?</h4>
             <form onSubmit={(e) => {
                 e.preventDefault();
                 addListTagToList();
-            }}>
-                <fieldset>
+            }}
+                className="flex flex-col">
+                <fieldset className="m-2">
                     <select onChange={onSelectTag} value={selectedTag}>
                         <option>Please Select A Tag</option>
                         {tags.map((t) => {
@@ -66,7 +68,7 @@ export const NewListTagForm = () => {
                         })}
                     </select>
                 </fieldset>
-                <fieldset>
+                <fieldset className="m-2">
                     <select onChange={onSelectList} value={selectedList}>
                         <option>Please Select A  List</option>
                         {lists.map((l) => {
@@ -74,7 +76,7 @@ export const NewListTagForm = () => {
                         })}
                     </select>
                 </fieldset>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Submit" className="text-white hover:underline " />
             </form>
         </section>
     </>)

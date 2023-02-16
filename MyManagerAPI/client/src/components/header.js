@@ -32,7 +32,7 @@ export default function Header({ isLoggedIn }) {
 
     return (
         <div>
-            <Navbar className='bg-forrest shadow-lg rounded text-white' expand="md">
+            <Navbar className='bg-forrest shadow-xl rounded text-white' expand="md">
                 <div className='ml-4 pt-2 '>
                     <NavbarBrand className='font-metro text-2xl' tag={RRNavLink} to="/">Metropo-List</NavbarBrand>
 

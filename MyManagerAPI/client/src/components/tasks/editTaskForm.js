@@ -55,41 +55,45 @@ export const EditTaskForm = () => {
 
     return (<>
         <section>
-            <h3>Edit Task</h3>
+            <h3 className="font-metro text-center text-white pt-4 text-3xl underline decoration-double underline-offset-4">Edit Task</h3>
             <form onSubmit={(e) => {
                 e.preventDefault()
                 updateTask();
-            }}>
-                <fieldset>
-                    <h5> Which List is This Task Related to?</h5>
-                    <select onChange={onSelect} value={selectedOption} >
-                        <option value={task.listId}>Please Select A List</option>
-                        {
-                            allLists.map((l) => {
-                                return <option key={l.id} value={l.id}>{l.listName}</option>
+            }}
+                className="shadow-xl rounded px-8 pt-6 pb-8 mb-4 m-8 border-2 bg-forrest flex flex-col text-white font-techno items-center">
+                <fieldset className="p-4 ">
+                    <h5 className="text-lg"> Which List is This Task Related to?</h5>
+                    <div className="flex flex-col">
+                        <select onChange={onSelect} value={selectedOption} className="text-black" >
+                            <option value={task.listId}>Please Select A List</option>
+                            {
+                                allLists.map((l) => {
+                                    return <option key={l.id} value={l.id}>{l.listName}</option>
 
-                            })
-                        }
-                    </select>
+                                })
+                            }
+                        </select>
+                    </div>
+
                 </fieldset>
-                <fieldset>
-                    <label htmlFor="dateDue">Date Due</label>
-                    <input name="dateDue" type="date" onChange={changeState} value={task.formattedDate} />
+                <fieldset className="p-4 ">
+                    <label className="m-4" htmlFor="dateDue">Date Due</label>
+                    <input className="text-black" name="dateDue" type="date" onChange={changeState} value={task.formattedDate} />
                 </fieldset>
-                <fieldset>
-                    <label htmlFor="isImportant">Is this Task Important?</label>
+                <fieldset className="p-4 ">
+                    <label className="m-4" htmlFor="isImportant">Is this Task Important?</label>
                     {/* //onchange true false */}
                     <input name="isImportant" type="checkbox" />
                 </fieldset>
-                <fieldset>
-                    <label htmlFor="title">Title</label>
-                    <input name="title" type="text" onChange={changeState} value={task.title} />
+                <fieldset className="p-4 ">
+                    <label className="m-4" htmlFor="title">Title</label>
+                    <input className="text-black" name="title" type="text" onChange={changeState} value={task.title} />
                 </fieldset>
-                <fieldset>
-                    <label htmlFor="description">Description</label>
-                    <input name="description" type="text" onChange={changeState} value={task.description} />
+                <fieldset className="p-4 ">
+                    <label className="m-4" htmlFor="description">Description</label>
+                    <input className="text-black" name="description" type="text" onChange={changeState} value={task.description} />
                 </fieldset>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Submit" className=" p-1 m-4 hover:underline border-white border-2 rounded bg-maroon" />
             </form>
         </section>
     </>)

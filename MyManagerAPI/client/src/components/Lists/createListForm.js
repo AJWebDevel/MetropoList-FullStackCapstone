@@ -8,7 +8,7 @@ import { currentUser } from "../../modules/userManager";
 export const CreateListForm = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState({});
-    const [newList, setNewList] = useState({});
+    const [newList, setNewList] = useState({ listName: "", isImportant: false, isPrivate: false });
     const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTags] = useState([])
     const [tag, setTag] = useState({});
@@ -47,32 +47,34 @@ export const CreateListForm = () => {
 
 
     return (<div>
+        <h3 className=" text-center text-white  pt-12 font-metro text-3xl underline decoration-double underline-offset-4">Create New To-Do Docket</h3>
 
         <form onSubmit={(e) => {
             e.preventDefault()
 
             addNewList()
-        }}>
+        }}
+            className="bg-forrest shadow-2xl font-techno shadow-md rounded px-8 pt-6 pb-8 mb-4 m-8 border-2 border-white flex flex-col text-white font-techno items-center">
 
 
 
-            <fieldset>
-                <label htmlFor="listName">List Name</label>
-                <input name="listName" onChange={changeState} value={newList.listName} />
+            <fieldset className="m-2 p-2">
+                <label className="m-4 text-lg" htmlFor="listName">List Name</label>
+                <input className="text-black" name="listName" onChange={changeState} value={newList.listName} />
             </fieldset>
-            <fieldset>
-                <label htmlFor="isImportant">Make List Important?</label>
+            <fieldset className="m-2 p-2">
+                <label className="m-4 text-lg" htmlFor="isImportant">Make List Important?</label>
                 <input name="isImportant" type="checkbox" onChange={changeState} />
             </fieldset>
-            <fieldset>
-                <label htmlFor="isPrivate">Make List Private?</label>
+            <fieldset className="m-2 p-2">
+                <label className="m-4 text-lg" htmlFor="isPrivate">Make List Private?</label>
                 <input name="isPrivate" type="checkbox" onChange={changeState} />
             </fieldset>
-            <fieldset>
-                <label htmlFor="dateCreated">Date Created</label>
-                <input name="dateCreated" type="date" onChange={changeState} />
+            <fieldset className="m-2 p-2">
+                <label className="m-4 text-lg" htmlFor="dateCreated">Date Created</label>
+                <input className="text-black" name="dateCreated" type="date" onChange={changeState} />
             </fieldset>
-            <input type="submit" value="Submit" />
+            <input className=" p-1 m-4 hover:underline border-white border-2 rounded bg-maroon" type="submit" value="Submit" />
         </form>
     </div>)
 }
