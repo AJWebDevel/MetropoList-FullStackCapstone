@@ -54,7 +54,7 @@ export const NewListTagForm = () => {
 
     return (<>
         <section className="text-black">
-            <h4 className="text-white text-center">Add A Tag?</h4>
+            <h4 className="text-white text-center">Add A Label?</h4>
             <form onSubmit={(e) => {
                 e.preventDefault();
                 addListTagToList();

@@ -20,7 +20,7 @@ export const ListByUser = () => {
 
 
     return (<section className="flex flex-col items-center p-6 ">
-        <h2 className="text-2xl text-center font-metro text-3xl underline text-white mb-6 mt-6 " >My Lists</h2>
+        <h2 className="text-2xl text-center font-metro text-3xl underline text-white mb-6 mt-6 " >Dockets </h2>
         <div className="text-center shadow-xl flex flex-col pl-12 pr-12 border-liteSoot border-4 p-4 mt-2 shadow-md m-10  bg-maroon rounded font-techno text-white">
             {
                 userLists.map((uL) => (
